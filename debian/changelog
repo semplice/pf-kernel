@@ -1,0 +1,7 @@
+linux-semplice (3.12.5-1) unstable; urgency=low
+
+  * Initial release. Packaging based on the great work done by
+    Stefan Lippers-Hollmann <s.l-h@gmx.de> in the linux-aptosid
+    package.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Sun, 15 Dec 2013 11:39:08 +0100
