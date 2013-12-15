@@ -1,3 +1,9 @@
+linux-semplice (3.12.5-3) unstable; urgency=low
+
+  * Added liblz4-tool to Build-Depends.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Sun, 15 Dec 2013 20:16:30 +0100
+
 linux-semplice (3.12.5-2) unstable; urgency=low
 
   * aufs tweaks.
