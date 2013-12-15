@@ -1,3 +1,9 @@
+linux-semplice (3.12.5-2) unstable; urgency=low
+
+  * aufs tweaks.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Sun, 15 Dec 2013 16:18:31 +0100
+
 linux-semplice (3.12.5-1) unstable; urgency=low
 
   * Initial release. Packaging based on the great work done by
