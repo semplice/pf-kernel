@@ -1,3 +1,9 @@
+linux-semplice (3.12.5-4) unstable; urgency=low
+
+  * config-arch-64: ensure CONFIG_IA32_EMULATION is set.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Wed, 18 Dec 2013 16:52:12 +0100
+
 linux-semplice (3.12.5-3) unstable; urgency=low
 
   * Added liblz4-tool to Build-Depends.
