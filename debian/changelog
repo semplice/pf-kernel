@@ -1,3 +1,314 @@
+linux-semplice (3.12.6-1) unstable; urgency=low
+
+  [ Steve Capper ]
+  * arm64: mm: Fix PMD_SECT_PROT_NONE definition
+
+  [ Rob Clark ]
+  * udl: fix issue with imported prime buffers
+
+  [ Takashi Iwai ]
+  * ALSA: compress: Fix 64bit ABI incompatibility
+
+  [ Stefano Panella ]
+  * ALSA: memalloc.h - fix wrong truncation of dma_addr_t
+
+  [ Takashi Iwai ]
+  * ALSA: hda - Add static DAC/pin mapping for AD1986A codec
+  * ALSA: hda - Mute all aamix inputs as default
+
+  [ Anssi Hannula ]
+  * ALSA: hda - hdmi: Fix IEC958 ctl indexes for some simple HDMI devices
+
+  [ Dmitry Eremin-Solenikov ]
+  * ARM: pxa: tosa: fix keys mapping
+
+  [ Rob Herring ]
+  * ARM: highbank: handle soft poweroff and reset key events
+
+  [ Maxime Ripard ]
+  * ARM: sun6i: dt: Fix interrupt trigger types
+
+  [ Sergei Ianovich ]
+  * ARM: pxa: prevent PXA270 occasional reboot freezes
+
+  [ Roger Quadros ]
+  * ARM: OMAP3: hwmod data: Don't prevent RESET of USB Host module
+
+  [ Konstantin Khlebnikov ]
+  * ARM: 7912/1: check stack pointer in get_wchan
+  * ARM: 7913/1: fix framepointer check in unwind_frame
+
+  [ Jon Medhurst ]
+  * ARM: 7917/1: cacheflush: correctly limit range of memory region being flushed
+
+  [ Andy Honig ]
+  * KVM: Improve create VCPU parameter (CVE-2013-4587)
+  * KVM: x86: Fix potential divide by 0 in lapic (CVE-2013-6367)
+  * KVM: x86: Convert vapic synchronization to _cached functions (CVE-2013-6368)
+
+  [ Gleb Natapov ]
+  * KVM: x86: fix guest-initiated crash with x2apic (CVE-2013-6376)
+
+  [ Dan Carpenter ]
+  * hwmon: Prevent some divide by zeros in FAN_TO_REG()
+
+  [ José Miguel Gonçalves ]
+  * hwmon: HIH-6130: Support I2C bus drivers without I2C_FUNC_SMBUS_QUICK
+
+  [ Brian Carnes ]
+  * hwmon: (w83l786ng) Fix fan speed control mode setting and reporting
+
+  [ Jean Delvare ]
+  * hwmon: (w83l768ng) Fix fan speed control range
+
+  [ Dave Chinner ]
+  * xfs: growfs overruns AGFL buffer on V4 filesystems
+
+  [ Dan Carpenter ]
+  * xfs: underflow bug in xfs_attrlist_by_handle()
+
+  [ Emmanuel Grumbach ]
+  * iwlwifi: pcie: fix interrupt coalescing for 7260 / 3160
+
+  [ Khalid Aziz ]
+  * PCI: Disable Bus Master only on kexec reboot
+
+  [ Linus Torvalds ]
+  * futex: fix handling of read-only-mapped hugepages
+
+  [ Jeff Layton ]
+  * nfsd: when reusing an existing repcache entry, unhash it first
+
+  [ Julius Werner ]
+  * usb: hub: Use correct reset for wedged USB3 devices that are NOTATTACHED
+
+  [ Alan Stern ]
+  * usb: dwc3: fix implementation of endpoint wedge
+
+  [ Michael Grzeschik ]
+  * usb: gadget: composite: reset delayed_status on reset_config
+
+  [ David Laight ]
+  * usb: xhci: Link TRB must not occur within a USB payload burst
+
+  [ Sebastian Andrzej Siewior ]
+  * usb: musb: musb_cppi41: factor most of cppi41_dma_callback() into cppi41_trans_done()
+  * usb: musb: musb_cppi41: handle pre-mature TX complete interrupt
+
+  [ Gustavo Zacarias ]
+  * USB: serial: option: blacklist interface 1 for Huawei E173s-6
+
+  [ Fangxiaozhi (Franko) ]
+  * USB: option: support new huawei devices
+
+  [ Christian Engelmayer ]
+  * Input: usbtouchscreen - separate report and transmit buffer size handling
+
+  [ Antti Palosaari ]
+  * media: af9035: fix broken I2C and USB I/O
+
+  [ Hong H. Pham ]
+  * powerpc: Fix PTE page address mismatch in pgtable ctor/dtor
+
+  [ Linus Pizunski ]
+  * drivers/rtc/rtc-at91rm9200.c: correct alarm over day/month wrap
+
+  [ Johannes Weiner ]
+  * mm: memcg: do not declare OOM from __GFP_NOFAIL allocations
+  * mm: memcg: do not allow task about to OOM kill to bypass the limit
+  * mm: memcg: fix race condition between memcg teardown and swapin
+
+  [ Axel Lin ]
+  * regulator: pfuze100: Fix address of FABID
+
+  [ Ezequiel Garcia ]
+  * Partially revert "mtd: nand: pxa3xx: Introduce 'marvell,armada370-nand' compatible string"
+
+  [ Will Deacon ]
+  * iommu/arm-smmu: use mutex instead of spinlock for locking page tables
+
+  [ Ville Syrjälä ]
+  * drm/i915: Fix pipe CSC post offset calculation
+
+  [ Sujith Manoharan ]
+  * ath9k: Fix QuickDrop usage
+  * ath9k: Fix XLNA bias strength
+
+  [ Felix Fietkau ]
+  * ath9k: fix duration calculation for non-aggregated packets
+
+  [ Johannes Berg ]
+  * cfg80211: disable 5/10 MHz support for all drivers
+
+  [ Paul Moore ]
+  * selinux: handle TCP SYN-ACK packets correctly in selinux_ip_output()
+  * selinux: handle TCP SYN-ACK packets correctly in selinux_ip_postroute()
+
+  [ Bob Copeland ]
+  * Revert "mac80211: allow disable power save in mesh"
+
+  [ Johannes Berg ]
+  * mac80211: fix scheduled scan rtnl deadlock
+  * mac80211: don't attempt to reorder multicast frames
+  * iwlwifi: mvm: check sta_id/drain values in debugfs
+
+  [ Ujjal Roy ]
+  * mwifiex: fix memory leak issue for ibss join
+
+  [ Maxime Ripard ]
+  * net: allwinner: emac: Add missing free_irq
+
+  [ Carolyn Wyborny ]
+  * igb: Fix for issue where values could be too high for udelay function.
+
+  [ Paulo Zanoni ]
+  * drm/i915: use the correct force_wake function at the PC8 code
+
+  [ Alex Deucher ]
+  * drm/radeon: fix typo in fetching mpll params
+  * drm/radeon: program DCE2 audio dto just like DCE3
+  * drm/radeon: fixup bad vram size on SI
+  * drm/radeon/atom: fix bus probes when hw_i2c is set (v2)
+
+  [ Matthew Garrett ]
+  * x86, efi: Don't use (U)EFI time services on 32 bit
+
+  [ cpw ]
+  * x86/UV: Fix NULL pointer dereference in uv_flush_tlb_others() if the 'nobau' boot option is used
+
+  [ H. Peter Anvin ]
+  * x86, build: Pass in additional -mno-mmx, -mno-sse options
+  * x86, build, icc: Remove uninitialized_var() from compiler-intel.h
+
+  [ Wei Yongjun ]
+  * media: saa7164: fix return value check in saa7164_initdev()
+
+  [ Hans Verkuil ]
+  * media: tef6862/radio-tea5764: actually assign clamp result
+  * media: bttv: don't setup the controls if there are no video devices
+
+  [ Antti Palosaari ]
+  * media: af9033: fix broken I2C
+
+  [ Hans Verkuil ]
+  * media: wm8775: fix broken audio routing
+
+  [ Antti Palosaari ]
+  * media: af9035: add [0413:6a05] Leadtek WinFast DTV Dongle Dual
+
+  [ Dan Carpenter ]
+  * media: af9035: unlock on error in af9035_i2c_master_xfer()
+  * Btrfs: fix access_ok() check in btrfs_ioctl_send()
+
+  [ David Sterba ]
+  * btrfs: call mnt_drop_write after interrupted subvol deletion
+
+  [ Mikulas Patocka ]
+  * dm bufio: initialize read-only module parameters
+  * dm snapshot: avoid snapshot space leak on crash
+  * dm stats: initialize read-only module parameter
+
+  [ Joe Thornber ]
+  * dm array: fix a reference counting bug in shadow_ablock
+
+  [ Mikulas Patocka ]
+  * dm delay: fix a possible deadlock due to shared workqueue
+
+  [ Mike Snitzer ]
+  * dm space map metadata: return on failure in sm_metadata_new_block
+
+  [ Joe Thornber ]
+  * dm space map: disallow decrementing a reference count below zero
+
+  [ Mikulas Patocka ]
+  * dm table: fail dm_table_create on dm_round_up overflow
+
+  [ Joe Thornber ]
+  * dm thin: switch to read only mode if a mapping insert fails
+
+  [ Mike Snitzer ]
+  * dm thin: switch to read-only mode if metadata space is exhausted
+
+  [ Joe Thornber ]
+  * dm thin: always fallback the pool mode if commit fails
+  * dm thin: re-establish read-only state when switching to fail mode
+  * dm thin: allow pool in read-only mode to transition to read-write mode
+
+  [ J. Bruce Fields ]
+  * vfs: split out vfs_getattr_nosec
+  * exportfs: fix 32-bit nfsd handling of 64-bit inode numbers
+
+  [ Benjamin Tissoires ]
+  * HID: kye: Add report fixup for Genius Manticore Keyboard
+
+  [ Ben Hutchings ]
+  * HID: kye: Fix missing break in kye_report_fixup()
+
+  [ Helge Deller ]
+  * nfs: fix do_div() warning by instead using sector_div()
+
+  [ Hans Verkuil ]
+  * cxd2820r_core: fix sparse warnings
+
+  [ Ben Segall ]
+  * sched: Avoid throttle_cfs_rq() racing with period_timer stopping
+
+  [ H Hartley Sweeten ]
+  * staging: comedi: drivers: use comedi_dio_update_state() for simple cases
+  * staging: comedi: ssv_dnp: use comedi_dio_update_state()
+
+  [ Alan ]
+  * sc1200_wdt: Fix oops
+
+  [ Andy Adamson ]
+  * NFSv4 wait on recovery for async session errors
+
+  [ Matt Walker ]
+  * Input: elantech - add support for newer (August 2013) devices
+
+  [ Greg Kroah-Hartman ]
+  * Revert "net: update consumers of MSG_MORE to recognize MSG_SENDPAGE_NOTLAST"
+
+  [ Josef Bacik ]
+  * Btrfs: do a full search everytime in btrfs_search_old_slot
+  * Btrfs: reset intwrite on transaction abort
+
+  [ Liu Bo ]
+  * Btrfs: fix memory leak of chunks' extent map
+
+  [ Josef Bacik ]
+  * Btrfs: fix hole check in log_one_extent
+
+  [ Filipe David Borba Manana ]
+  * Btrfs: fix incorrect inode acl reset
+
+  [ Josef Bacik ]
+  * Btrfs: stop using vfs_read in send
+  * Btrfs: take ordered root lock when removing ordered operations inode
+
+  [ Liu Bo ]
+  * Btrfs: do not run snapshot-aware defragment on error
+  * Btrfs: fix a crash when running balance and defrag concurrently
+  * Btrfs: fix lockdep error in async commit
+
+  [ Jesse Barnes ]
+  * i915/vlv: untangle integrated clock source handling v4
+  * drm/i915/vlv: add VLV specific clock_get function v3
+
+  [ Chris Wilson ]
+  * drm/i915/vlv: fix up broken precision in vlv_crtc_clock_get
+
+  [ Roger Quadros ]
+  * ARM: OMAP2+: hwmod: Fix SOFTRESET logic
+
+  [ Greg Kroah-Hartman ]
+  * Linux 3.12.6
+
+  [ Eugenio Paolantonio (g7) ]
+  * Updated ABI to reflect 3.12.6.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Sat, 21 Dec 2013 17:04:49 +0100
+
 linux-semplice (3.12.5-4) unstable; urgency=low
 
   * config-arch-64: ensure CONFIG_IA32_EMULATION is set.
