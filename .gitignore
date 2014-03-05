@@ -33,6 +33,9 @@ modules.builtin
 *.lzo
 *.gcno
 
+config32
+config64
+
 #
 # Top-level generic files
 #
