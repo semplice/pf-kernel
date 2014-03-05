@@ -321,6 +321,9 @@ static void xhci_cleanup_msix(struct xhci_hcd *xhci)
 	struct usb_hcd *hcd = xhci_to_hcd(xhci);
 	struct pci_dev *pdev = to_pci_dev(hcd->self.controller);
 
+	if (xhci->quirks & XHCI_PLAT)
+		return;
+
 	xhci_free_irq(xhci);
 
 	if (xhci->msix_entries) {
@@ -3459,7 +3462,7 @@ int xhci_discover_or_reset_device(struct usb_hcd *hcd, struct usb_device *udev)
 	/* Wait for the Reset Device command to finish */
 	timeleft = wait_for_completion_interruptible_timeout(
 			reset_device_cmd->completion,
-			USB_CTRL_SET_TIMEOUT);
+			XHCI_CMD_DEFAULT_TIMEOUT);
 	if (timeleft <= 0) {
 		xhci_warn(xhci, "%s while waiting for reset device command\n",
 				timeleft == 0 ? "Timeout" : "Signal");
@@ -3581,11 +3584,6 @@ void xhci_free_dev(struct usb_hcd *hcd, struct usb_device *udev)
 	for (i = 0; i < 31; ++i) {
 		virt_dev->eps[i].ep_state &= ~EP_HALT_PENDING;
 		del_timer_sync(&virt_dev->eps[i].stop_cmd_timer);
-	}
-
-	if (udev->usb2_hw_lpm_enabled) {
-		xhci_set_usb2_hardware_lpm(hcd, udev, 0);
-		udev->usb2_hw_lpm_enabled = 0;
 	}
 
 	spin_lock_irqsave(&xhci->lock, flags);
@@ -3721,9 +3719,6 @@ disable_slot:
  * the device).
  * We should be protected by the usb_address0_mutex in khubd's hub_port_init, so
  * we should only issue and wait on one address command at the same time.
- *
- * We add one to the device address issued by the hardware because the USB core
- * uses address 1 for the root hubs (even though they're not really devices).
  */
 int xhci_address_device(struct usb_hcd *hcd, struct usb_device *udev)
 {
@@ -3868,16 +3863,13 @@ int xhci_address_device(struct usb_hcd *hcd, struct usb_device *udev)
 	slot_ctx = xhci_get_slot_ctx(xhci, virt_dev->out_ctx);
 	trace_xhci_address_ctx(xhci, virt_dev->out_ctx,
 				slot_ctx->dev_info >> 27);
-	/* Use kernel assigned address for devices; store xHC assigned
-	 * address locally. */
-	virt_dev->address = (le32_to_cpu(slot_ctx->dev_state) & DEV_ADDR_MASK)
-		+ 1;
 	/* Zero the input context control for later use */
 	ctrl_ctx->add_flags = 0;
 	ctrl_ctx->drop_flags = 0;
 
 	xhci_dbg_trace(xhci, trace_xhci_dbg_address,
-			"Internal device address = %d", virt_dev->address);
+		       "Internal device address = %d",
+		       le32_to_cpu(slot_ctx->dev_state) & DEV_ADDR_MASK);
 
 	return 0;
 }
@@ -4727,9 +4719,6 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
 	/* Accept arbitrarily long scatter-gather lists */
 	hcd->self.sg_tablesize = ~0;
 
-	/* support to build packet from discontinuous buffers */
-	hcd->self.no_sg_constraint = 1;
-
 	/* XHCI controllers don't stop the ep queue on short packets :| */
 	hcd->self.no_stop_on_short = 1;
 
@@ -4754,6 +4743,14 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
 		/* xHCI private pointer was set in xhci_pci_probe for the second
 		 * registered roothub.
 		 */
+		xhci = hcd_to_xhci(hcd);
+		/*
+		 * Support arbitrarily aligned sg-list entries on hosts without
+		 * TD fragment rules (which are currently unsupported).
+		 */
+		if (xhci->hci_version < 0x100)
+			hcd->self.no_sg_constraint = 1;
+
 		return 0;
 	}
 
@@ -4779,6 +4776,9 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
 	 */
 	if (xhci->hci_version > 0x96)
 		xhci->quirks |= XHCI_SPURIOUS_SUCCESS;
+
+	if (xhci->hci_version < 0x100)
+		hcd->self.no_sg_constraint = 1;
 
 	/* Make sure the HC is halted. */
 	retval = xhci_halt(xhci);

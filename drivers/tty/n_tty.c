@@ -813,8 +813,7 @@ static void process_echoes(struct tty_struct *tty)
 	struct n_tty_data *ldata = tty->disc_data;
 	size_t echoed;
 
-	if ((!L_ECHO(tty) && !L_ECHONL(tty)) ||
-	    ldata->echo_mark == ldata->echo_tail)
+	if (ldata->echo_mark == ldata->echo_tail)
 		return;
 
 	mutex_lock(&ldata->output_lock);
@@ -1238,7 +1237,8 @@ n_tty_receive_signal_char(struct tty_struct *tty, int signal, unsigned char c)
 	if (L_ECHO(tty)) {
 		echo_char(c, tty);
 		commit_echoes(tty);
-	}
+	} else
+		process_echoes(tty);
 	isig(signal, tty);
 	return;
 }
@@ -1269,7 +1269,7 @@ n_tty_receive_char_special(struct tty_struct *tty, unsigned char c)
 	if (I_IXON(tty)) {
 		if (c == START_CHAR(tty)) {
 			start_tty(tty);
-			commit_echoes(tty);
+			process_echoes(tty);
 			return 0;
 		}
 		if (c == STOP_CHAR(tty)) {
@@ -1759,19 +1759,13 @@ int is_ignored(int sig)
 static void n_tty_set_termios(struct tty_struct *tty, struct ktermios *old)
 {
 	struct n_tty_data *ldata = tty->disc_data;
-	int canon_change = 1;
 
-	if (old)
-		canon_change = (old->c_lflag ^ tty->termios.c_lflag) & ICANON;
-	if (canon_change) {
+	if (!old || (old->c_lflag ^ tty->termios.c_lflag) & ICANON) {
 		bitmap_zero(ldata->read_flags, N_TTY_BUF_SIZE);
 		ldata->line_start = ldata->canon_head = ldata->read_tail;
 		ldata->erasing = 0;
 		ldata->lnext = 0;
 	}
-
-	if (canon_change && !L_ICANON(tty) && read_cnt(ldata))
-		wake_up_interruptible(&tty->read_wait);
 
 	ldata->icanon = (L_ICANON(tty) != 0);
 
@@ -1829,6 +1823,7 @@ static void n_tty_set_termios(struct tty_struct *tty, struct ktermios *old)
 	 */
 	if (!I_IXON(tty) && old && (old->c_iflag & IXON) && !tty->flow_stopped) {
 		start_tty(tty);
+		process_echoes(tty);
 	}
 
 	/* The termios change make the tty ready for I/O */
@@ -2263,11 +2258,11 @@ static ssize_t n_tty_read(struct tty_struct *tty, struct file *file,
 	n_tty_set_room(tty);
 	up_read(&tty->termios_rwsem);
 
-	mutex_unlock(&ldata->atomic_read_lock);
 	remove_wait_queue(&tty->read_wait, &wait);
-
 	if (!waitqueue_active(&tty->read_wait))
 		ldata->minimum_to_wake = minimum;
+
+	mutex_unlock(&ldata->atomic_read_lock);
 
 	__set_current_state(TASK_RUNNING);
 	if (b - buf)

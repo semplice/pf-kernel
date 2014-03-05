@@ -105,7 +105,7 @@ int mxl111sf_read_reg(struct mxl111sf_state *state, u8 addr, u8 *data)
 		ret = -EINVAL;
 	}
 
-	pr_debug("R: (0x%02x, 0x%02x)\n", addr, *data);
+	pr_debug("R: (0x%02x, 0x%02x)\n", addr, buf[1]);
 fail:
 	return ret;
 }
@@ -266,7 +266,7 @@ static int mxl111sf_adap_fe_init(struct dvb_frontend *fe)
 	struct mxl111sf_adap_state *adap_state = &state->adap_state[fe->id];
 	int err;
 
-	/* exit if we didnt initialize the driver yet */
+	/* exit if we didn't initialize the driver yet */
 	if (!state->chip_id) {
 		mxl_debug("driver not yet initialized, exit.");
 		goto fail;
@@ -322,7 +322,7 @@ static int mxl111sf_adap_fe_sleep(struct dvb_frontend *fe)
 	struct mxl111sf_adap_state *adap_state = &state->adap_state[fe->id];
 	int err;
 
-	/* exit if we didnt initialize the driver yet */
+	/* exit if we didn't initialize the driver yet */
 	if (!state->chip_id) {
 		mxl_debug("driver not yet initialized, exit.");
 		goto fail;
