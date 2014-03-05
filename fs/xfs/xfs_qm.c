@@ -222,14 +222,6 @@ xfs_qm_dqpurge_hints(
 
 	xfs_dqunlock(dqp);
 
-	xfs_dqlock(dqp);
-	if (dqp->dq_flags & XFS_DQ_FREEING) {
-		xfs_dqunlock(dqp);
-		return EAGAIN;
-	}
-
-	/* If this quota has a hint attached, prepare for releasing it now */
-	gdqp = dqp->q_gdquot;
 	if (gdqp)
 		xfs_qm_dqrele(gdqp);
 	if (pdqp)

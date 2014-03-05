@@ -339,11 +339,6 @@ static int tbf_change(struct Qdisc *sch, struct nlattr *opt)
 			qdisc_put_rtab(qdisc_get_rtab(&qopt->peakrate,
 						      tb[TCA_TBF_PTAB]));
 
-	if (max_size < psched_mtu(qdisc_dev(sch)))
-		pr_warn_ratelimited("sch_tbf: burst %u is lower than device %s mtu (%u) !\n",
-				    max_size, qdisc_dev(sch)->name,
-				    psched_mtu(qdisc_dev(sch)));
-
 	if (q->qdisc != &noop_qdisc) {
 		err = fifo_set_limit(q->qdisc, qopt->limit);
 		if (err)

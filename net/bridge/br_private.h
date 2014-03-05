@@ -514,7 +514,8 @@ static inline bool br_multicast_querier_exists(struct net_bridge *br,
 #else
 static inline int br_multicast_rcv(struct net_bridge *br,
 				   struct net_bridge_port *port,
-				   struct sk_buff *skb)
+				   struct sk_buff *skb,
+				   u16 vid)
 {
 	return 0;
 }

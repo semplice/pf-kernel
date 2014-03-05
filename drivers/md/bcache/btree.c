@@ -1964,10 +1964,6 @@ static bool btree_insert_key(struct btree *b, struct btree_op *op,
 			bcache_dev_sectors_dirty_add(b->c, KEY_INODE(k),
 						     KEY_START(k), KEY_SIZE(k));
 
-		if (KEY_DIRTY(k))
-			bcache_dev_sectors_dirty_add(b->c, KEY_INODE(k),
-						     KEY_START(k), KEY_SIZE(k));
-
 		while (m != end(i) &&
 		       bkey_cmp(k, &START_KEY(m)) > 0)
 			prev = m, m = bkey_next(m);

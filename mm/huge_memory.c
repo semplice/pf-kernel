@@ -1540,10 +1540,8 @@ int change_huge_pmd(struct vm_area_struct *vma, pmd_t *pmd,
 			entry = pmd_modify(entry, newprot);
 			ret = HPAGE_PMD_NR;
 			BUG_ON(pmd_write(entry));
-			set_pmd_at(mm, addr, pmd, entry);
 		} else {
 			struct page *page = pmd_page(*pmd);
-			entry = *pmd;
 
 			/*
 			 * Do not trap faults against the zero page. The
