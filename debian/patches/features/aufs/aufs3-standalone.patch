@@ -1,10 +1,8 @@
 aufs3.13 standalone patch
 
-diff --git a/fs/inode.c b/fs/inode.c
-index bc83168..6dd1207 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
-@@ -57,6 +57,7 @@ static struct hlist_head *inode_hashtable __read_mostly;
+@@ -57,6 +57,7 @@
  static __cacheline_aligned_in_smp DEFINE_SPINLOCK(inode_hash_lock);
  
  __cacheline_aligned_in_smp DEFINE_SPINLOCK(inode_sb_list_lock);
@@ -12,7 +10,7 @@ index bc83168..6dd1207 100644
  
  /*
   * Empty aops. Can be used for the cases where the user does not
-@@ -1513,6 +1514,7 @@ int update_time(struct inode *inode, struct timespec *time, int flags)
+@@ -1513,6 +1514,7 @@
  	mark_inode_dirty_sync(inode);
  	return 0;
  }
@@ -20,11 +18,9 @@ index bc83168..6dd1207 100644
  
  /**
   *	touch_atime	-	update the access time
-diff --git a/fs/namespace.c b/fs/namespace.c
-index be32ebc..d3f6f59 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -425,6 +425,7 @@ void __mnt_drop_write(struct vfsmount *mnt)
+@@ -425,6 +425,7 @@
  	mnt_dec_writers(real_mount(mnt));
  	preempt_enable();
  }
@@ -32,7 +28,7 @@ index be32ebc..d3f6f59 100644
  
  /**
   * mnt_drop_write - give up write access to a mount
-@@ -1509,6 +1510,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
+@@ -1509,6 +1510,7 @@
  	}
  	return 0;
  }
@@ -40,8 +36,6 @@ index be32ebc..d3f6f59 100644
  
  static void cleanup_group_ids(struct mount *mnt, struct mount *end)
  {
-diff --git a/fs/notify/group.c b/fs/notify/group.c
-index bd2625b..2ff2a0f 100644
 --- a/fs/notify/group.c
 +++ b/fs/notify/group.c
 @@ -22,6 +22,7 @@
@@ -52,7 +46,7 @@ index bd2625b..2ff2a0f 100644
  
  #include <linux/fsnotify_backend.h>
  #include "fsnotify.h"
-@@ -65,6 +66,7 @@ void fsnotify_get_group(struct fsnotify_group *group)
+@@ -65,6 +66,7 @@
  {
  	atomic_inc(&group->refcnt);
  }
@@ -60,7 +54,7 @@ index bd2625b..2ff2a0f 100644
  
  /*
   * Drop a reference to a group.  Free it if it's through.
-@@ -74,6 +76,7 @@ void fsnotify_put_group(struct fsnotify_group *group)
+@@ -74,6 +76,7 @@
  	if (atomic_dec_and_test(&group->refcnt))
  		fsnotify_final_destroy_group(group);
  }
@@ -68,7 +62,7 @@ index bd2625b..2ff2a0f 100644
  
  /*
   * Create a new fsnotify_group and hold a reference for the group returned.
-@@ -102,6 +105,7 @@ struct fsnotify_group *fsnotify_alloc_group(const struct fsnotify_ops *ops)
+@@ -102,6 +105,7 @@
  
  	return group;
  }
@@ -76,11 +70,9 @@ index bd2625b..2ff2a0f 100644
  
  int fsnotify_fasync(int fd, struct file *file, int on)
  {
-diff --git a/fs/notify/mark.c b/fs/notify/mark.c
-index 923fe4a..176b435 100644
 --- a/fs/notify/mark.c
 +++ b/fs/notify/mark.c
-@@ -109,6 +109,7 @@ void fsnotify_put_mark(struct fsnotify_mark *mark)
+@@ -109,6 +109,7 @@
  		mark->free_mark(mark);
  	}
  }
@@ -88,7 +80,7 @@ index 923fe4a..176b435 100644
  
  /*
   * Any time a mark is getting freed we end up here.
-@@ -191,6 +192,7 @@ void fsnotify_destroy_mark(struct fsnotify_mark *mark,
+@@ -191,6 +192,7 @@
  	fsnotify_destroy_mark_locked(mark, group);
  	mutex_unlock(&group->mark_mutex);
  }
@@ -96,7 +88,7 @@ index 923fe4a..176b435 100644
  
  void fsnotify_set_mark_mask_locked(struct fsnotify_mark *mark, __u32 mask)
  {
-@@ -275,6 +277,7 @@ err:
+@@ -275,6 +277,7 @@
  
  	return ret;
  }
@@ -104,7 +96,7 @@ index 923fe4a..176b435 100644
  
  int fsnotify_add_mark(struct fsnotify_mark *mark, struct fsnotify_group *group,
  		      struct inode *inode, struct vfsmount *mnt, int allow_dups)
-@@ -336,6 +339,7 @@ void fsnotify_init_mark(struct fsnotify_mark *mark,
+@@ -336,6 +339,7 @@
  	atomic_set(&mark->refcnt, 1);
  	mark->free_mark = free_mark;
  }
@@ -112,11 +104,9 @@ index 923fe4a..176b435 100644
  
  static int fsnotify_mark_destroy(void *ignored)
  {
-diff --git a/fs/open.c b/fs/open.c
-index 4b3e1ed..ce49f2b 100644
 --- a/fs/open.c
 +++ b/fs/open.c
-@@ -62,6 +62,7 @@ int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
+@@ -62,6 +62,7 @@
  	mutex_unlock(&dentry->d_inode->i_mutex);
  	return ret;
  }
@@ -124,11 +114,9 @@ index 4b3e1ed..ce49f2b 100644
  
  long vfs_truncate(struct path *path, loff_t length)
  {
-diff --git a/fs/splice.c b/fs/splice.c
-index 719ca3e..6300dc8 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
-@@ -1106,6 +1106,7 @@ long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
+@@ -1124,6 +1124,7 @@
  
  	return splice_write(pipe, out, ppos, len, flags);
  }
@@ -136,7 +124,7 @@ index 719ca3e..6300dc8 100644
  
  /*
   * Attempt to initiate a splice from a file to a pipe.
-@@ -1132,6 +1133,7 @@ long do_splice_to(struct file *in, loff_t *ppos,
+@@ -1150,6 +1151,7 @@
  
  	return splice_read(in, ppos, pipe, len, flags);
  }
@@ -144,11 +132,9 @@ index 719ca3e..6300dc8 100644
  
  /**
   * splice_direct_to_actor - splices data directly between two non-pipes
-diff --git a/security/commoncap.c b/security/commoncap.c
-index b9d613e..ba3b618 100644
 --- a/security/commoncap.c
 +++ b/security/commoncap.c
-@@ -988,9 +988,11 @@ int cap_mmap_addr(unsigned long addr)
+@@ -988,9 +988,11 @@
  	}
  	return ret;
  }
@@ -160,8 +146,6 @@ index b9d613e..ba3b618 100644
  	return 0;
  }
 +EXPORT_SYMBOL(cap_mmap_file);
-diff --git a/security/device_cgroup.c b/security/device_cgroup.c
-index 7c2a0a7..a37c054 100644
 --- a/security/device_cgroup.c
 +++ b/security/device_cgroup.c
 @@ -7,6 +7,7 @@
@@ -172,7 +156,7 @@ index 7c2a0a7..a37c054 100644
  #include <linux/list.h>
  #include <linux/uaccess.h>
  #include <linux/seq_file.h>
-@@ -745,6 +746,7 @@ int __devcgroup_inode_permission(struct inode *inode, int mask)
+@@ -745,6 +746,7 @@
  	return __devcgroup_check_permission(type, imajor(inode), iminor(inode),
  			access);
  }
@@ -180,11 +164,9 @@ index 7c2a0a7..a37c054 100644
  
  int devcgroup_inode_mknod(int mode, dev_t dev)
  {
-diff --git a/security/security.c b/security/security.c
-index 15b6928..ae6eba6 100644
 --- a/security/security.c
 +++ b/security/security.c
-@@ -407,6 +407,7 @@ int security_path_rmdir(struct path *dir, struct dentry *dentry)
+@@ -407,6 +407,7 @@
  		return 0;
  	return security_ops->path_rmdir(dir, dentry);
  }
@@ -192,7 +174,7 @@ index 15b6928..ae6eba6 100644
  
  int security_path_unlink(struct path *dir, struct dentry *dentry)
  {
-@@ -423,6 +424,7 @@ int security_path_symlink(struct path *dir, struct dentry *dentry,
+@@ -423,6 +424,7 @@
  		return 0;
  	return security_ops->path_symlink(dir, dentry, old_name);
  }
@@ -200,7 +182,7 @@ index 15b6928..ae6eba6 100644
  
  int security_path_link(struct dentry *old_dentry, struct path *new_dir,
  		       struct dentry *new_dentry)
-@@ -431,6 +433,7 @@ int security_path_link(struct dentry *old_dentry, struct path *new_dir,
+@@ -431,6 +433,7 @@
  		return 0;
  	return security_ops->path_link(old_dentry, new_dir, new_dentry);
  }
@@ -208,7 +190,7 @@ index 15b6928..ae6eba6 100644
  
  int security_path_rename(struct path *old_dir, struct dentry *old_dentry,
  			 struct path *new_dir, struct dentry *new_dentry)
-@@ -449,6 +452,7 @@ int security_path_truncate(struct path *path)
+@@ -449,6 +452,7 @@
  		return 0;
  	return security_ops->path_truncate(path);
  }
@@ -216,7 +198,7 @@ index 15b6928..ae6eba6 100644
  
  int security_path_chmod(struct path *path, umode_t mode)
  {
-@@ -456,6 +460,7 @@ int security_path_chmod(struct path *path, umode_t mode)
+@@ -456,6 +460,7 @@
  		return 0;
  	return security_ops->path_chmod(path, mode);
  }
@@ -224,7 +206,7 @@ index 15b6928..ae6eba6 100644
  
  int security_path_chown(struct path *path, kuid_t uid, kgid_t gid)
  {
-@@ -463,6 +468,7 @@ int security_path_chown(struct path *path, kuid_t uid, kgid_t gid)
+@@ -463,6 +468,7 @@
  		return 0;
  	return security_ops->path_chown(path, uid, gid);
  }
@@ -232,7 +214,7 @@ index 15b6928..ae6eba6 100644
  
  int security_path_chroot(struct path *path)
  {
-@@ -539,6 +545,7 @@ int security_inode_readlink(struct dentry *dentry)
+@@ -539,6 +545,7 @@
  		return 0;
  	return security_ops->inode_readlink(dentry);
  }
@@ -240,7 +222,7 @@ index 15b6928..ae6eba6 100644
  
  int security_inode_follow_link(struct dentry *dentry, struct nameidata *nd)
  {
-@@ -553,6 +560,7 @@ int security_inode_permission(struct inode *inode, int mask)
+@@ -553,6 +560,7 @@
  		return 0;
  	return security_ops->inode_permission(inode, mask);
  }
@@ -248,7 +230,7 @@ index 15b6928..ae6eba6 100644
  
  int security_inode_setattr(struct dentry *dentry, struct iattr *attr)
  {
-@@ -675,6 +683,7 @@ int security_file_permission(struct file *file, int mask)
+@@ -675,6 +683,7 @@
  
  	return fsnotify_perm(file, mask);
  }
@@ -256,7 +238,7 @@ index 15b6928..ae6eba6 100644
  
  int security_file_alloc(struct file *file)
  {
-@@ -735,6 +744,7 @@ int security_mmap_file(struct file *file, unsigned long prot,
+@@ -735,6 +744,7 @@
  		return ret;
  	return ima_file_mmap(file, prot);
  }

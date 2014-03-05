@@ -8,7 +8,7 @@ Unfortunately we cannot currently distribute the firmware.
 
 --- a/sound/pci/Kconfig
 +++ b/sound/pci/Kconfig
-@@ -252,6 +252,7 @@
+@@ -255,6 +255,7 @@
  
  config SND_CS46XX
  	tristate "Cirrus Logic (Sound Fusion) CS4280/CS461x/CS462x/CS463x"
@@ -16,7 +16,7 @@ Unfortunately we cannot currently distribute the firmware.
  	select SND_RAWMIDI
  	select SND_AC97_CODEC
  	help
-@@ -263,6 +264,7 @@
+@@ -266,6 +267,7 @@
  
  config SND_CS46XX_NEW_DSP
  	bool "Cirrus Logic (Sound Fusion) New DSP support"
