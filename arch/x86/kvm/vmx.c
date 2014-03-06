@@ -94,7 +94,7 @@ module_param_named(enable_shadow_vmcs, enable_shadow_vmcs, bool, S_IRUGO);
  * VMX and be a hypervisor for its own guests. If nested=0, guests may not
  * use VMX instructions.
  */
-static bool __read_mostly nested = 1;
+static bool __read_mostly nested = 0;
 module_param(nested, bool, S_IRUGO);
 
 #define KVM_GUEST_CR0_MASK (X86_CR0_NW | X86_CR0_CD)
