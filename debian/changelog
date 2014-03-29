@@ -1,4 +1,4 @@
-linux-semplice (3.13.7-1) unstable; urgency=medium
+linux-semplice (3.13.7-1) devel; urgency=medium
 
   * Updated to pf-kernel 3.13.7.
 
