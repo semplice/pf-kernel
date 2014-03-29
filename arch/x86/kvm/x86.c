@@ -6092,7 +6092,7 @@ static int __vcpu_run(struct kvm_vcpu *vcpu)
 		}
 		if (need_resched()) {
 			srcu_read_unlock(&kvm->srcu, vcpu->srcu_idx);
-			kvm_resched(vcpu);
+			schedule();
 			vcpu->srcu_idx = srcu_read_lock(&kvm->srcu);
 		}
 	}
@@ -6163,7 +6163,7 @@ static int complete_emulated_mmio(struct kvm_vcpu *vcpu)
 		frag->len -= len;
 	}
 
-	if (vcpu->mmio_cur_fragment == vcpu->mmio_nr_fragments) {
+	if (vcpu->mmio_cur_fragment >= vcpu->mmio_nr_fragments) {
 		vcpu->mmio_needed = 0;
 
 		/* FIXME: return into emulator if single-stepping.  */
