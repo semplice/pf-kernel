@@ -1,3 +1,130 @@
+linux-semplice (3.13.8-1) devel; urgency=medium
+
+  [ Fernando Luis Vazquez Cao ]
+  * HID: hidraw: fix warning destroying hidraw device files after parent
+
+  [ Charles Keepax ]
+  * ALSA: compress: Pass through return value of open ops callback
+
+  [ Stefan Agner ]
+  * clocksource: vf_pit_timer: use complement for sched_clock reading
+
+  [ Ben Widawsky ]
+  * drm/i915: Fix PSR programming
+
+  [ Daniel Vetter ]
+  * drm/i915: Don't enable display error interrupts from the start
+
+  [ Chris Wilson ]
+  * drm/i915: Disable stolen memory when DMAR is active
+
+  [ Vaibhav Nagarnaik ]
+  * tracing: Fix array size mismatch in format string
+
+  [ Helge Deller ]
+  * partly revert commit 8a10bc9: parisc/sti_console: prefer Linux fonts over built-in ROM fonts
+
+  [ Christian Riesch ]
+  * net: davinci_emac: Replace devm_request_irq with request_irq
+
+  [ Trond Myklebust ]
+  * NFSv4: Use the correct net namespace in nfs4_update_server
+
+  [ Dan Carpenter ]
+  * media: cxusb: unlock on error in cxusb_i2c_xfer()
+  * media: dw2102: some missing unlocks on error
+  * media: cx18: check for allocation failure in cx18_read_eeprom()
+
+  [ Josh Durgin ]
+  * libceph: block I/O when PAUSE or FULL osd map flags are set
+  * libceph: resend all writes after the osdmap loses the full flag
+
+  [ Stephen Warren ]
+  * ASoC: max98090: make REVISION_ID readable
+
+  [ Peter Zijlstra ]
+  * stop_machine: Fix^2 race between stop_two_cpus() and stop_cpus()
+
+  [ Ben Hutchings ]
+  * sfc: Use the correct maximum TX DMA ring size for SFC9100
+
+  [ Ben Peddell ]
+  * ARM: 7941/2: Fix incorrect FDT initrd parameter override
+
+  [ Trond Myklebust ]
+  * SUNRPC: Fix a pipe_version reference leak
+
+  [ Alexei Starovoitov ]
+  * x86: bpf_jit: support negative offsets
+
+  [ Linus Torvalds ]
+  * printk: fix syslog() overflowing user buffer
+
+  [ Russell King ]
+  * Fix uses of dma_max_pfn() when converting to a limiting address
+
+  [ Peter Zijlstra ]
+  * perf tools: Fix AAAAARGH64 memory barriers
+
+  [ Ben Hutchings ]
+  * deb-pkg: Fix building for MIPS big-endian or ARM OABI
+  * deb-pkg: Fix cross-building linux-headers package
+
+  [ Guenter Roeck ]
+  * MIPS: Fix build error seen in some configurations
+
+  [ Dan Carpenter ]
+  * p54: clamp properly instead of just truncating
+
+  [ Markus Pargmann ]
+  * regulator: core: Replace direct ops->disable usage
+
+  [ Gavin Shan ]
+  * powerpc/powernv: Move PHB-diag dump functions around
+  * powerpc/eeh: Handle multiple EEH errors
+  * powerpc/powernv: Dump PHB diag-data immediately
+  * powerpc/powernv: Refactor PHB diag-data dump
+
+  [ Dave Jones ]
+  * fs/proc/proc_devtree.c: remove empty /proc/device-tree when no openfirmware exists.
+
+  [ Hans de Goede ]
+  * Input: elantech - improve clickpad detection
+
+  [ Marcelo Tosatti ]
+  * KVM: MMU: handle invalid root_hpa at __direct_map
+  * KVM: x86: handle invalid root_hpa everywhere
+  * KVM: VMX: fix use after free of vmx->loaded_vmcs
+
+  [ Ping Cheng ]
+  * Input: wacom - make sure touch_max is set for touch devices
+  * Input: wacom - add support for three new Intuos devices
+  * Input: wacom - add reporting of SW_MUTE_DEVICE events
+
+  [ Sarah Sharp ]
+  * xhci: Fix resume issues on Renesas chips in Samsung laptops
+
+  [ Michele Baldessari ]
+  * e100: Fix "disabling already-disabled device" warning
+
+  [ Ilya Dryomov ]
+  * libceph: rename ceph_msg::front_max to front_alloc_len
+  * libceph: rename front to front_len in get_reply()
+  * libceph: fix preallocation check in get_reply()
+
+  [ Greg Kroah-Hartman ]
+  * Linux 3.13.8
+
+  [ Oleksandr Natalenko ]
+  * version-3.13: bump to v3.13.3-pf
+  * distro-3.13: bump to v3.13.3-pf
+
+  [ Eugenio Paolantonio (g7) ]
+  * kernelarch-x86/config: set CONFIG_SND_CS46XX_NEW_DSP=y
+  * Changed the ABINAME to 8.semplice.0
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Tue, 01 Apr 2014 20:00:56 +0200
+
 linux-semplice (3.13.7-1) devel; urgency=medium
 
   * Updated to pf-kernel 3.13.7.
