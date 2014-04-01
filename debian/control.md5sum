@@ -6,6 +6,6 @@
 d41d8cd98f00b204e9800998ecf8427e  debian/templates/control.main.in
 1b9fb19ca22c73560139002929f9fa42  debian/templates/control.source.in
 83a58c446d8027f8a660c39bdf4beab0  debian/templates/image-dbg.lintian-override.in
-17051c1aaf3bae14f33747b8e120efe6  debian/config/defines
+8f73348a1d1bd0f0541e8fc1e4769451  debian/config/defines
 bb59993aee1d49b4db64697f21596218  debian/config/amd64/defines
 d409cf52acf39d674370a9210d20ebbb  debian/config/i386/defines
