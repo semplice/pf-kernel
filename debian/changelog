@@ -1,3 +1,72 @@
+linux-semplice (3.13.9-1) devel; urgency=medium
+
+  [ Theodore Ts'o ]
+  * ext4: atomically set inode->i_flags in ext4_set_inode_flags()
+
+  [ Al Viro ]
+  * rcuwalk: recheck mount_lock after mountpoint crossing attempts
+
+  [ Dmitry Torokhov ]
+  * Input: mousedev - fix race when creating mixed device
+
+  [ Benjamin Tissoires ]
+  * Input: synaptics - add manual min/max quirk
+
+  [ Hans de Goede ]
+  * Input: synaptics - add manual min/max quirk for ThinkPad X240
+  * Input: cypress_ps2 - don't report as a button pads
+
+  [ Wei Liu ]
+  * xen/balloon: flush persistent kmaps in correct position
+
+  [ David Vrabel ]
+  * Revert "xen: properly account for _PAGE_NUMA during xen pte translations"
+
+  [ Scott Wood ]
+  * i2c: cpm: Fix build by adding of_address.h and of_irq.h
+
+  [ Daniel Vetter ]
+  * drm/i915: Undo gtt scratch pte unmapping again
+
+  [ Artem Fetishev ]
+  * x86: fix boot on uniprocessor systems
+
+  [ Al Viro ]
+  * make prepend_name() work correctly when called with negative *buflen
+
+  [ Thomas Petazzoni ]
+  * net: mvneta: rename MVNETA_GMAC2_PSC_ENABLE to MVNETA_GMAC2_PCS_ENABLE
+  * net: mvneta: fix usage as a module on RGMII configurations
+
+  [ Sasha Levin ]
+  * random32: avoid attempt to late reseed if in the middle of seeding
+
+  [ Al Viro ]
+  * resizable namespace.c hashes
+  * keep shadowed vfsmounts together
+  * don't bother with propagate_mnt() unless the target is shared
+  * switch mnt_hash to hlist
+
+  [ David Rientjes ]
+  * mm: close PageTail race
+
+  [ Li Zefan ]
+  * cgroup: protect modifications to cgroup_idr with cgroup_mutex
+
+  [ Daniel Borkmann ]
+  * netfilter: nf_conntrack_dccp: fix skb_header_pointer API usages
+
+  [ Greg Kroah-Hartman ]
+  * Linux 3.13.9
+
+  [ Oleksandr Natalenko ]
+  * uksm-3.13: replace compound_trans_head() call with compound_head()
+
+  [ Eugenio Paolantonio (g7) ]
+  * Changed abiname to 9.semplice.0
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Mon, 07 Apr 2014 20:18:38 +0200
+
 linux-semplice (3.13.8-1) devel; urgency=medium
 
   [ Fernando Luis Vazquez Cao ]
