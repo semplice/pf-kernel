@@ -83,11 +83,11 @@ tp43
 (dp44
 S'abiname'
 p45
-S'3.13-8.semplice.0'
+S'3.13-9.semplice.0'
 p46
 sS'source'
 p47
-V3.13.8-1
+V3.13.9-1
 p48
 ss(S'description'
 S'i386'
@@ -163,7 +163,7 @@ tp85
 (dp86
 S'abiname'
 p87
-S'8.semplice.0'
+S'9.semplice.0'
 p88
 ss(S'image'
 p89
