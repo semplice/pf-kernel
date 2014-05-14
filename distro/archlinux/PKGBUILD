@@ -1,5 +1,5 @@
 pkgname=('linux-pf' 'linux-pf-headers')
-pkgver=3.13.3
+pkgver=3.14.0
 pkgrel=1
 pkgdesc="pf-kernel with modules"
 arch=('i686' 'x86_64')
@@ -33,14 +33,14 @@ package_linux-pf() {
   make INSTALL_MOD_PATH=$pkgdir/usr modules_install || return 1
 
   # Running depmod for installed modules
-  depmod -b "$pkgdir/usr" -F System.map "$pkgver-pf"
+  depmod -b "$pkgdir/usr" -F System.map "$pkgver-pf$pkgrel"
 
   # There's no separation of firmware depending on kernel version -
   # comment this line if you intend on using the built kernel exclusively,
   # otherwise there'll be file conflicts with the existing kernel
   rm -rf $pkgdir/usr/lib/firmware
 
-  rm -f $pkgdir/usr/lib/modules/$pkgver-pf/{source,build}
+  rm -f $pkgdir/usr/lib/modules/$pkgver-pf$pkgrel/{source,build}
 
   install -Dm644 "System.map" "$pkgdir/boot/System.map-linux-pf"
   install -Dm644 "arch/x86/boot/bzImage" "$pkgdir/boot/vmlinuz-linux-pf"
@@ -52,18 +52,18 @@ package_linux-pf-headers() {
 
   cd $startdir
 
-  mkdir -p $pkgdir/usr/lib/modules/$pkgver-pf/
-  cd $pkgdir/usr/lib/modules/$pkgver-pf/
-  ln -s ../../../src/linux-$pkgver-pf build
+  mkdir -p $pkgdir/usr/lib/modules/$pkgver-pf$pkgrel/
+  cd $pkgdir/usr/lib/modules/$pkgver-pf$pkgrel/
+  ln -s ../../../src/linux-$pkgver-pf$pkgrel build
 
   cd $startdir
 
-  mkdir -p $pkgdir/usr/src/linux-$pkgver-pf
-  make INSTALL_HDR_PATH=$pkgdir/usr/src/linux-$pkgver-pf headers_install
-  install -Dm644 .config $pkgdir/usr/src/linux-$pkgver-pf
-  install -Dm644 Module.symvers $pkgdir/usr/src/linux-$pkgver-pf
-  rsync -a --include='*/' --include='Kbuild*' --include='Kconfig*' --include='*Makefile*' --include='auto.conf' --include='autoconf.h' --include='kconfig.h' --include='asm-offsets.s' --exclude='*' --prune-empty-dirs . $pkgdir/usr/src/linux-$pkgver-pf
-  rsync -a scripts $pkgdir/usr/src/linux-$pkgver-pf
-  rsync -a include $pkgdir/usr/src/linux-$pkgver-pf
-  rsync -a arch/x86/include $pkgdir/usr/src/linux-$pkgver-pf/arch/x86
+  mkdir -p $pkgdir/usr/src/linux-$pkgver-pf$pkgrel
+  make INSTALL_HDR_PATH=$pkgdir/usr/src/linux-$pkgver-pf$pkgrel headers_install
+  install -Dm644 .config $pkgdir/usr/src/linux-$pkgver-pf$pkgrel
+  install -Dm644 Module.symvers $pkgdir/usr/src/linux-$pkgver-pf$pkgrel
+  rsync -a --include='*/' --include='Kbuild*' --include='Kconfig*' --include='*Makefile*' --include='auto.conf' --include='autoconf.h' --include='kconfig.h' --include='asm-offsets.s' --exclude='*' --prune-empty-dirs . $pkgdir/usr/src/linux-$pkgver-pf$pkgrel
+  rsync -a scripts $pkgdir/usr/src/linux-$pkgver-pf$pkgrel
+  rsync -a include $pkgdir/usr/src/linux-$pkgver-pf$pkgrel
+  rsync -a arch/x86/include $pkgdir/usr/src/linux-$pkgver-pf$pkgrel/arch/x86
 }
