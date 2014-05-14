@@ -439,7 +439,7 @@ static void cleanup_timers(struct list_head *head)
  */
 void posix_cpu_timers_exit(struct task_struct *tsk)
 {
-	add_device_randomness((const void*) &tsk->se.sum_exec_runtime,
+	add_device_randomness((const void*) &tsk_seruntime(tsk),
 						sizeof(unsigned long long));
 	cleanup_timers(tsk->cpu_timers);
 

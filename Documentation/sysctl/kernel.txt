@@ -38,6 +38,7 @@ show up in /proc/sys/kernel:
 - hung_task_timeout_secs
 - hung_task_warnings
 - kexec_load_disabled
+- iso_cpu
 - kptr_restrict
 - kstack_depth_to_print       [ X86 only ]
 - l2cr                        [ PPC only ]
@@ -318,6 +319,7 @@ for more than this value report a warning.
 This file shows up if CONFIG_DETECT_HUNG_TASK is enabled.
 
 0: means infinite timeout - no checking done.
+Possible values to set are in range {0..LONG_MAX/HZ}.
 
 ==============================================================
 
