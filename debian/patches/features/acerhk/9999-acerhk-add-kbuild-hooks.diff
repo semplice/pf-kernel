@@ -9,8 +9,10 @@ Signed-off-by: Stefan Lippers-Hollmann <s.l-h@gmx.de>
  drivers/platform/x86/Makefile |  1 +
  2 files changed, 35 insertions(+)
 
---- a/drivers/platform/x86/Kconfig
-+++ b/drivers/platform/x86/Kconfig
+Index: pf-kernel/drivers/platform/x86/Kconfig
+===================================================================
+--- pf-kernel.orig/drivers/platform/x86/Kconfig
++++ pf-kernel/drivers/platform/x86/Kconfig
 @@ -55,6 +55,40 @@ config ACERHDF
  	  If you have an Acer Aspire One netbook, say Y or M
  	  here.
@@ -52,13 +54,15 @@ Signed-off-by: Stefan Lippers-Hollmann <s.l-h@gmx.de>
  config ASUS_LAPTOP
  	tristate "Asus Laptop Extras"
  	depends on ACPI
---- a/drivers/platform/x86/Makefile
-+++ b/drivers/platform/x86/Makefile
+Index: pf-kernel/drivers/platform/x86/Makefile
+===================================================================
+--- pf-kernel.orig/drivers/platform/x86/Makefile
++++ pf-kernel/drivers/platform/x86/Makefile
 @@ -15,6 +15,7 @@ obj-$(CONFIG_DELL_WMI)		+= dell-wmi.o
  obj-$(CONFIG_DELL_WMI_AIO)	+= dell-wmi-aio.o
  obj-$(CONFIG_ACER_WMI)		+= acer-wmi.o
  obj-$(CONFIG_ACERHDF)		+= acerhdf.o
 +obj-$(CONFIG_ACERHK)		+= acerhk.o
  obj-$(CONFIG_HP_ACCEL)		+= hp_accel.o
+ obj-$(CONFIG_HP_WIRELESS)	+= hp-wireless.o
  obj-$(CONFIG_HP_WMI)		+= hp-wmi.o
- obj-$(CONFIG_AMILO_RFKILL)	+= amilo-rfkill.o
