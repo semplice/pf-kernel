@@ -1073,8 +1073,8 @@ diff -druN /tmp/null/Documentation/filesystems/aufs/design/99plan.txt tmp/Docume
 +Otherwise from /new.
 diff -druN /tmp/null/Documentation/filesystems/aufs/README tmp/Documentation/filesystems/aufs/README
 --- /tmp/null/Documentation/filesystems/aufs/README	1970-01-01 01:00:00.000000000 +0100
-+++ tmp/Documentation/filesystems/aufs/README	2014-01-18 23:08:13.492102000 +0100
-@@ -0,0 +1,344 @@
++++ tmp/Documentation/filesystems/aufs/README	2014-05-15 18:49:45.068782000 +0200
+@@ -0,0 +1,345 @@
 +
 +Aufs3 -- advanced multi layered unification filesystem version 3.x
 +http://aufs.sf.net
@@ -1402,6 +1402,7 @@ diff -druN /tmp/null/Documentation/filesystems/aufs/README tmp/Documentation/fil
 +"pemasu from Finland" made a donation (2013/7).
 +The Parted Magic Project made a donation (2013/9 and 11).
 +Pavel Barta made a donation (2013/10).
++Nikolay Pertsev made a donation (2014/5).
 +
 +Thank you very much.
 +Donations are always, including future donations, very important and
@@ -11156,8 +11157,8 @@ diff -druN /tmp/null/fs/aufs/finfo.c tmp/fs/aufs/finfo.c
 +}
 diff -druN /tmp/null/fs/aufs/f_op.c tmp/fs/aufs/f_op.c
 --- /tmp/null/fs/aufs/f_op.c	1970-01-01 01:00:00.000000000 +0100
-+++ tmp/fs/aufs/f_op.c	2014-03-05 16:19:45.458699000 +0100
-@@ -0,0 +1,718 @@
++++ tmp/fs/aufs/f_op.c	2014-05-15 18:49:45.068782000 +0200
+@@ -0,0 +1,725 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
 + *
@@ -11600,6 +11601,7 @@ diff -druN /tmp/null/fs/aufs/f_op.c tmp/fs/aufs/f_op.c
 + * The similar scenario is applied to aufs_readlink() too.
 + */
 +
++#if 0 /* stop calling security_file_mmap() */
 +/* cf. linux/include/linux/mman.h: calc_vm_prot_bits() */
 +#define AuConv_VM_PROT(f, b)	_calc_vm_trans(f, VM_##b, PROT_##b)
 +
@@ -11633,6 +11635,7 @@ diff -druN /tmp/null/fs/aufs/f_op.c tmp/fs/aufs/f_op.c
 +		| AuConv_VM_MAP(flags, DENYWRITE)
 +		| AuConv_VM_MAP(flags, LOCKED);
 +}
++#endif
 +
 +static int aufs_mmap(struct file *file, struct vm_area_struct *vma)
 +{
@@ -11676,8 +11679,13 @@ diff -druN /tmp/null/fs/aufs/f_op.c tmp/fs/aufs/f_op.c
 +	lockdep_on();
 +
 +	au_vm_file_reset(vma, h_file);
-+	err = security_mmap_file(h_file, au_prot_conv(vma->vm_flags),
-+				 au_flag_conv(vma->vm_flags));
++	/*
++	 * we cannot call security_mmap_file() here since it may acquire
++	 * mmap_sem or i_mutex.
++	 *
++	 * err = security_mmap_file(h_file, au_prot_conv(vma->vm_flags),
++	 *			 au_flag_conv(vma->vm_flags));
++	 */
 +	if (!err)
 +		err = h_file->f_op->mmap(h_file, vma);
 +	if (unlikely(err))
@@ -12737,8 +12745,8 @@ diff -druN /tmp/null/fs/aufs/fstype.h tmp/fs/aufs/fstype.h
 +#endif /* __AUFS_FSTYPE_H__ */
 diff -druN /tmp/null/fs/aufs/hfsnotify.c tmp/fs/aufs/hfsnotify.c
 --- /tmp/null/fs/aufs/hfsnotify.c	1970-01-01 01:00:00.000000000 +0100
-+++ tmp/fs/aufs/hfsnotify.c	2014-01-18 23:08:13.498102000 +0100
-@@ -0,0 +1,295 @@
++++ tmp/fs/aufs/hfsnotify.c	2014-05-15 18:49:55.672949000 +0200
+@@ -0,0 +1,281 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
 + *
@@ -12898,27 +12906,27 @@ diff -druN /tmp/null/fs/aufs/hfsnotify.c tmp/fs/aufs/hfsnotify.c
 +}
 +
 +static int au_hfsn_handle_event(struct fsnotify_group *group,
++				struct inode *inode,
 +				struct fsnotify_mark *inode_mark,
 +				struct fsnotify_mark *vfsmount_mark,
-+				struct fsnotify_event *event)
++				u32 mask, void *data, int data_type,
++				const unsigned char *file_name, u32 cookie)
 +{
 +	int err;
 +	struct au_hnotify *hnotify;
 +	struct inode *h_dir, *h_inode;
-+	__u32 mask;
-+	struct qstr h_child_qstr = QSTR_INIT(event->file_name, event->name_len);
++	struct qstr h_child_qstr = QSTR_INIT(file_name, strlen(file_name));
 +
-+	AuDebugOn(event->data_type != FSNOTIFY_EVENT_INODE);
++	AuDebugOn(data_type != FSNOTIFY_EVENT_INODE);
 +
 +	err = 0;
 +	/* if FS_UNMOUNT happens, there must be another bug */
-+	mask = event->mask;
 +	AuDebugOn(mask & FS_UNMOUNT);
 +	if (mask & (FS_IN_IGNORED | FS_UNMOUNT))
 +		goto out;
 +
-+	h_dir = event->to_tell;
-+	h_inode = event->inode;
++	h_dir = inode;
++	h_inode = NULL;
 +#ifdef AuDbgHnotify
 +	au_debug_on();
 +	if (1 || h_child_qstr.len != sizeof(AUFS_XINO_FNAME) - 1
@@ -12939,21 +12947,7 @@ diff -druN /tmp/null/fs/aufs/hfsnotify.c tmp/fs/aufs/hfsnotify.c
 +	return err;
 +}
 +
-+/* isn't it waste to ask every registered 'group'? */
-+/* copied from linux/fs/notify/inotify/inotify_fsnotiry.c */
-+/* it should be exported to modules */
-+static bool au_hfsn_should_send_event(struct fsnotify_group *group,
-+				      struct inode *h_inode,
-+				      struct fsnotify_mark *inode_mark,
-+				      struct fsnotify_mark *vfsmount_mark,
-+				      __u32 mask, void *data, int data_type)
-+{
-+	mask = (mask & ~FS_EVENT_ON_CHILD);
-+	return inode_mark->mask & mask;
-+}
-+
 +static struct fsnotify_ops au_hfsn_ops = {
-+	.should_send_event	= au_hfsn_should_send_event,
 +	.handle_event		= au_hfsn_handle_event,
 +	.free_group_priv	= au_hfsn_free_group
 +};
@@ -13096,7 +13090,7 @@ diff -druN /tmp/null/fs/aufs/hfsplus.c tmp/fs/aufs/hfsplus.c
 +}
 diff -druN /tmp/null/fs/aufs/hnotify.c tmp/fs/aufs/hnotify.c
 --- /tmp/null/fs/aufs/hnotify.c	1970-01-01 01:00:00.000000000 +0100
-+++ tmp/fs/aufs/hnotify.c	2014-03-05 16:19:45.458699000 +0100
++++ tmp/fs/aufs/hnotify.c	2014-05-15 18:49:55.672949000 +0200
 @@ -0,0 +1,710 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -13684,7 +13678,7 @@ diff -druN /tmp/null/fs/aufs/hnotify.c tmp/fs/aufs/hnotify.c
 +		au_fset_hnjob(flags[AuHn_CHILD], MNTPNT);
 +		/*FALLTHROUGH*/
 +	case FS_CREATE:
-+		AuDebugOn(!h_child_name || !h_child_inode);
++		AuDebugOn(!h_child_name);
 +		break;
 +
 +	case FS_DELETE:
@@ -31763,7 +31757,7 @@ diff -druN /tmp/null/fs/aufs/xino.c tmp/fs/aufs/xino.c
 +}
 diff -druN /tmp/null/include/uapi/linux/aufs_type.h tmp/include/uapi/linux/aufs_type.h
 --- /tmp/null/include/uapi/linux/aufs_type.h	1970-01-01 01:00:00.000000000 +0100
-+++ tmp/include/uapi/linux/aufs_type.h	2014-03-05 16:19:45.462699000 +0100
++++ tmp/include/uapi/linux/aufs_type.h	2014-05-15 18:49:55.672949000 +0200
 @@ -0,0 +1,281 @@
 +/*
 + * Copyright (C) 2005-2014 Junjiro R. Okajima
@@ -31806,7 +31800,7 @@ diff -druN /tmp/null/include/uapi/linux/aufs_type.h tmp/include/uapi/linux/aufs_
 +
 +#include <linux/limits.h>
 +
-+#define AUFS_VERSION	"3.13-20140303"
++#define AUFS_VERSION	"3.14-20140512"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
@@ -32046,3 +32040,8 @@ diff -druN /tmp/null/include/uapi/linux/aufs_type.h tmp/include/uapi/linux/aufs_
 +				      struct aufs_mvdown)
 +
 +#endif /* __AUFS_TYPE_H__ */
+diff -druN /tmp/null/include/uapi/linux/Kbuild tmp/include/uapi/linux/Kbuild
+--- /tmp/null/include/uapi/linux/Kbuild	1970-01-01 01:00:00.000000000 +0100
++++ tmp/include/uapi/linux/Kbuild	2014-01-18 23:08:13.503102000 +0100
+@@ -0,0 +1 @@
++header-y = aufs_type.h
