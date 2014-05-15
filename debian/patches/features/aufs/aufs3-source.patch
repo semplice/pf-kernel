@@ -32040,8 +32040,3 @@ diff -druN /tmp/null/include/uapi/linux/aufs_type.h tmp/include/uapi/linux/aufs_
 +				      struct aufs_mvdown)
 +
 +#endif /* __AUFS_TYPE_H__ */
-diff -druN /tmp/null/include/uapi/linux/Kbuild tmp/include/uapi/linux/Kbuild
---- /tmp/null/include/uapi/linux/Kbuild	1970-01-01 01:00:00.000000000 +0100
-+++ tmp/include/uapi/linux/Kbuild	2014-01-18 23:08:13.503102000 +0100
-@@ -0,0 +1 @@
-+header-y = aufs_type.h
