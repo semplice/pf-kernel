@@ -25,8 +25,10 @@ Therefore, perform a basic check for the existence of
 missing, except for the pre-R600 KMS case.
 
 ---
---- a/drivers/gpu/drm/radeon/radeon_drv.c
-+++ b/drivers/gpu/drm/radeon/radeon_drv.c
+Index: pf-kernel/drivers/gpu/drm/radeon/radeon_drv.c
+===================================================================
+--- pf-kernel.orig/drivers/gpu/drm/radeon/radeon_drv.c
++++ pf-kernel/drivers/gpu/drm/radeon/radeon_drv.c
 @@ -36,6 +36,8 @@
  #include <drm/drm_pciids.h>
  #include <linux/console.h>
@@ -36,7 +38,7 @@ missing, except for the pre-R600 KMS case.
  #include <linux/pm_runtime.h>
  #include <linux/vga_switcheroo.h>
  #include "drm_crtc_helper.h"
-@@ -321,6 +323,35 @@
+@@ -327,6 +329,35 @@ static struct drm_driver driver_old = {
  
  static struct drm_driver kms_driver;
  
@@ -72,7 +74,7 @@ missing, except for the pre-R600 KMS case.
  static int radeon_kick_out_firmware_fb(struct pci_dev *pdev)
  {
  	struct apertures_struct *ap;
-@@ -347,6 +378,12 @@
+@@ -353,6 +384,12 @@ static int radeon_pci_probe(struct pci_d
  {
  	int ret;
  
@@ -85,7 +87,7 @@ missing, except for the pre-R600 KMS case.
  	/* Get rid of things like offb */
  	ret = radeon_kick_out_firmware_fb(pdev);
  	if (ret)
-@@ -575,6 +612,7 @@
+@@ -591,6 +628,7 @@ static struct pci_driver *pdriver;
  static struct pci_driver radeon_pci_driver = {
  	.name = DRIVER_NAME,
  	.id_table = pciidlist,

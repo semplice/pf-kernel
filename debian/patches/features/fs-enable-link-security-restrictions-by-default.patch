@@ -6,9 +6,11 @@ Bug-Debian: http://bugs.debian.org/609455
 This reverts commit 561ec64ae67ef25cac8d72bb9c4bfc955edfd415
 ('VFS: don't do protected {sym,hard}links by default').
 
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -689,8 +689,8 @@
+Index: pf-kernel/fs/namei.c
+===================================================================
+--- pf-kernel.orig/fs/namei.c
++++ pf-kernel/fs/namei.c
+@@ -700,8 +700,8 @@ static inline void put_link(struct namei
  	path_put(link);
  }
  
