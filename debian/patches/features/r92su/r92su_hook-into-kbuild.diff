@@ -2,10 +2,10 @@ r92su: hook into kbuild
 
 Signed-off-by: Stefan Lippers-Hollmann <s.l-h@gmx.de>
 
-Index: pf-kernel/drivers/net/wireless/Kconfig
+Index: production/drivers/net/wireless/Kconfig
 ===================================================================
---- pf-kernel.orig/drivers/net/wireless/Kconfig
-+++ pf-kernel/drivers/net/wireless/Kconfig
+--- production.orig/drivers/net/wireless/Kconfig
++++ production/drivers/net/wireless/Kconfig
 @@ -275,6 +275,7 @@ source "drivers/net/wireless/iwlegacy/Kc
  source "drivers/net/wireless/libertas/Kconfig"
  source "drivers/net/wireless/orinoco/Kconfig"
@@ -14,10 +14,10 @@ Index: pf-kernel/drivers/net/wireless/Kconfig
  source "drivers/net/wireless/rt2x00/Kconfig"
  source "drivers/net/wireless/rtlwifi/Kconfig"
  source "drivers/net/wireless/ti/Kconfig"
-Index: pf-kernel/drivers/net/wireless/Makefile
+Index: production/drivers/net/wireless/Makefile
 ===================================================================
---- pf-kernel.orig/drivers/net/wireless/Makefile
-+++ pf-kernel/drivers/net/wireless/Makefile
+--- production.orig/drivers/net/wireless/Makefile
++++ production/drivers/net/wireless/Makefile
 @@ -43,6 +43,9 @@ obj-$(CONFIG_MWL8K)	+= mwl8k.o
  
  obj-$(CONFIG_IWLWIFI)	+= iwlwifi/
