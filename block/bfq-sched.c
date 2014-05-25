@@ -381,7 +381,7 @@ static void bfq_active_insert(struct bfq_service_tree *st,
 		BUG_ON(!bfqd);
 		bfq_weights_tree_add(bfqd, entity, &bfqd->group_weights_tree);
 	}
-	if (bfqd->hw_tag && bfqg != bfqd->root_group) {
+	if (bfqg != bfqd->root_group) {
 		BUG_ON(!bfqg);
 		BUG_ON(!bfqd);
 		bfqg->active_entities++;
@@ -492,7 +492,7 @@ static void bfq_active_extract(struct bfq_service_tree *st,
 		bfq_weights_tree_remove(bfqd, entity,
 					&bfqd->group_weights_tree);
 	}
-	if (bfqd->hw_tag && bfqg != bfqd->root_group) {
+	if (bfqg != bfqd->root_group) {
 		BUG_ON(!bfqg);
 		BUG_ON(!bfqd);
 		BUG_ON(!bfqg->active_entities);
