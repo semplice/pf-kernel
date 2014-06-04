@@ -38,6 +38,10 @@ static int ath9k_ps_enable;
 module_param_named(ps_enable, ath9k_ps_enable, int, 0444);
 MODULE_PARM_DESC(ps_enable, "Enable WLAN PowerSave");
 
+static int modparam_override_countrycode = -1;
+module_param_named(override_countrycode, modparam_override_countrycode, int, S_IRUGO);
+MODULE_PARM_DESC(override_countrycode, "Override countrycode hardcoded in EEPROM with this value (DANGEROUS).");
+
 #define CHAN2G(_freq, _idx)  { \
 	.center_freq = (_freq), \
 	.hw_value = (_idx), \
@@ -841,6 +845,10 @@ static int ath9k_init_device(struct ath9k_htc_priv *priv,
 		goto err_init;
 
 	ah = priv->ah;
+
+	if (modparam_override_countrycode != -1)
+		ath9k_hw_regulatory(ah)->current_rd = modparam_override_countrycode;
+
 	common = ath9k_hw_common(ah);
 	ath9k_set_hw_capab(priv, hw);
 

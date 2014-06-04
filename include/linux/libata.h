@@ -822,7 +822,6 @@ struct ata_port {
 	unsigned long		qc_allocated;
 	unsigned int		qc_active;
 	int			nr_active_links; /* #links with active qcs */
-	unsigned int		last_tag;	/* track next tag hw expects */
 
 	struct ata_link		link;		/* host default link */
 	struct ata_link		*slave_link;	/* see ata_slave_link_init() */
@@ -863,6 +862,10 @@ struct ata_port {
 #endif
 	/* owned by EH */
 	u8			sector_buf[ATA_SECT_SIZE] ____cacheline_aligned;
+
+#ifndef __GENKSYMS__
+	unsigned int		last_tag;	/* track next tag hw expects */
+#endif
 };
 
 /* The following initializer overrides a method to NULL whether one of

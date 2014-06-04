@@ -55,6 +55,10 @@ int modparam_noht;
 module_param_named(noht, modparam_noht, int, S_IRUGO);
 MODULE_PARM_DESC(noht, "Disable MPDU aggregation.");
 
+static int modparam_override_countrycode = -1;
+module_param_named(override_countrycode, modparam_override_countrycode, int, S_IRUGO);
+MODULE_PARM_DESC(override_countrycode, "Override countrycode hardcoded in EEPROM with this value (DANGEROUS).");
+
 #define RATE(_bitrate, _hw_rate, _txpidx, _flags) {	\
 	.bitrate	= (_bitrate),			\
 	.flags		= (_flags),			\
@@ -2006,6 +2010,9 @@ int carl9170_register(struct ar9170 *ar)
 	err = carl9170_parse_eeprom(ar);
 	if (err)
 		return err;
+
+	if (modparam_override_countrycode != -1)
+		regulatory->current_rd = modparam_override_countrycode;
 
 	err = ath_regd_init(regulatory, ar->hw->wiphy,
 			    carl9170_reg_notifier);

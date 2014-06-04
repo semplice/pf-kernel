@@ -589,10 +589,8 @@ static const struct firmware *brcmf_sdio_get_fw(struct brcmf_sdio *bus,
 
 found:
 	err = request_firmware(&fw, name, &bus->sdiodev->func[2]->dev);
-	if ((err) || (!fw)) {
-		brcmf_err("fail to request firmware %s (%d)\n", name, err);
+	if (err)
 		return NULL;
-	}
 
 	return fw;
 }
