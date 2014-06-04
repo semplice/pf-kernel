@@ -2,9 +2,11 @@ kvm_intel: enabled nested on default
 
 Signed-off-by: Stefan Lippers-Hollmann <s.l-h@gmx.de>
 
---- a/arch/x86/kvm/vmx.c
-+++ b/arch/x86/kvm/vmx.c
-@@ -94,7 +94,7 @@
+Index: pf-kernel/arch/x86/kvm/vmx.c
+===================================================================
+--- pf-kernel.orig/arch/x86/kvm/vmx.c
++++ pf-kernel/arch/x86/kvm/vmx.c
+@@ -94,7 +94,7 @@ module_param_named(enable_shadow_vmcs, e
   * VMX and be a hypervisor for its own guests. If nested=0, guests may not
   * use VMX instructions.
   */
