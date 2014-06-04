@@ -985,8 +985,10 @@ static int mxt_load_fw(struct device *dev, const char *fn)
 	int ret;
 
 	ret = request_firmware(&fw, fn, dev);
-	if (ret)
+	if (ret) {
+		dev_err(dev, "Unable to open firmware %s\n", fn);
 		return ret;
+	}
 
 	/* Change to the bootloader mode */
 	mxt_write_object(data, MXT_GEN_COMMAND_T6,

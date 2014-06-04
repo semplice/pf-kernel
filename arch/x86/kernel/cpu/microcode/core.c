@@ -84,7 +84,6 @@
 #include <linux/mm.h>
 #include <linux/syscore_ops.h>
 
-#include <xen/xen.h>
 #include <asm/microcode.h>
 #include <asm/processor.h>
 #include <asm/cpu_device_id.h>
@@ -547,9 +546,7 @@ static int __init microcode_init(void)
 	struct cpuinfo_x86 *c = &cpu_data(0);
 	int error;
 
-	if (xen_pv_domain())
-		microcode_ops = init_xen_microcode();
-	else if (c->x86_vendor == X86_VENDOR_INTEL)
+	if (c->x86_vendor == X86_VENDOR_INTEL)
 		microcode_ops = init_intel_microcode();
 	else if (c->x86_vendor == X86_VENDOR_AMD)
 		microcode_ops = init_amd_microcode();

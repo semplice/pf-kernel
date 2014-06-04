@@ -44,7 +44,6 @@
 #include <linux/io.h>
 #include <linux/reboot.h>
 #include <linux/bcd.h>
-#include <linux/platform_device.h>
 
 #include <asm/setup.h>
 #include <asm/efi.h>
@@ -778,20 +777,6 @@ void __init efi_late_init(void)
 {
 	efi_bgrt_init();
 }
-
-#ifdef CONFIG_EFI_VARS_MODULE
-static int __init efi_load_efivars(void)
-{
-	struct platform_device *pdev;
-
-	if (!efi_enabled(EFI_RUNTIME_SERVICES))
-		return 0;
-
-	pdev = platform_device_register_simple("efivars", 0, NULL, 0);
-	return IS_ERR(pdev) ? PTR_ERR(pdev) : 0;
-}
-device_initcall(efi_load_efivars);
-#endif
 
 void __init efi_set_executable(efi_memory_desc_t *md, bool executable)
 {

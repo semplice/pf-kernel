@@ -363,8 +363,10 @@ static int ath3k_load_patch(struct usb_device *udev)
 		fw_version.rom_version);
 
 	ret = request_firmware(&firmware, filename, &udev->dev);
-	if (ret)
+	if (ret < 0) {
+		BT_ERR("Patch file not found %s", filename);
 		return ret;
+	}
 
 	pt_version.rom_version = *(int *)(firmware->data + firmware->size - 8);
 	pt_version.build_version = *(int *)
@@ -423,8 +425,10 @@ static int ath3k_load_syscfg(struct usb_device *udev)
 		fw_version.rom_version, clk_value, ".dfu");
 
 	ret = request_firmware(&firmware, filename, &udev->dev);
-	if (ret)
+	if (ret < 0) {
+		BT_ERR("Configuration file not found %s", filename);
 		return ret;
+	}
 
 	ret = ath3k_load_fwfile(udev, firmware);
 	release_firmware(firmware);

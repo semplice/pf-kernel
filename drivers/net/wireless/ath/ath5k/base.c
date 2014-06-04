@@ -85,9 +85,6 @@ module_param_named(no_hw_rfkill_switch, ath5k_modparam_no_hw_rfkill_switch,
 								bool, S_IRUGO);
 MODULE_PARM_DESC(no_hw_rfkill_switch, "Ignore the GPIO RFKill switch state");
 
-static int modparam_override_countrycode = -1;
-module_param_named(override_countrycode, modparam_override_countrycode, int, S_IRUGO);
-MODULE_PARM_DESC(override_countrycode, "Override countrycode hardcoded in EEPROM with this value (DANGEROUS).");
 
 /* Module info */
 MODULE_AUTHOR("Jiri Slaby");
@@ -2578,9 +2575,6 @@ ath5k_init_ah(struct ath5k_hw *ah, const struct ath_bus_ops *bus_ops)
 	ret = ath5k_hw_init(ah);
 	if (ret)
 		goto err_irq;
-
-	if (modparam_override_countrycode != -1)
-		ah->ah_capabilities.cap_eeprom.ee_regdomain = modparam_override_countrycode;
 
 	/* Set up multi-rate retry capabilities */
 	if (ah->ah_capabilities.cap_has_mrr_support) {

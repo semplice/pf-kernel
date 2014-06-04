@@ -604,15 +604,6 @@ int dm_bm_flush(struct dm_block_manager *bm)
 }
 EXPORT_SYMBOL_GPL(dm_bm_flush);
 
-int dm_bm_flush_and_unlock(struct dm_block_manager *bm,
-			   struct dm_block *superblock)
-{
-	dm_bm_unlock(superblock);
-
-	return dm_bm_flush(bm);
-}
-EXPORT_SYMBOL_GPL(dm_bm_flush_and_unlock);
-
 void dm_bm_prefetch(struct dm_block_manager *bm, dm_block_t b)
 {
 	dm_bufio_prefetch(bm->bufio, b, 1);

@@ -219,8 +219,10 @@ static int firmware_download(struct usb_device *udev)
 	size_t max_packet_size;
 
 	ret = request_firmware(&fw, firmware_name, &udev->dev);
-	if (ret)
+	if (ret) {
+		log("download err : %d", ret);
 		return ret;
+	}
 
 	fwlength = fw->size;
 

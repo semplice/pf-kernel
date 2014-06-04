@@ -185,8 +185,11 @@ int as102_fw_upload(struct as10x_bus_adapter_t *bus_adap)
 
 	/* request kernel to locate firmware file: part1 */
 	errno = request_firmware(&firmware, fw1, &dev->dev);
-	if (errno)
+	if (errno < 0) {
+		pr_err("%s: unable to locate firmware file: %s\n",
+		       DRIVER_NAME, fw1);
 		goto error;
+	}
 
 	/* initiate firmware upload */
 	errno = as102_firmware_upload(bus_adap, cmd_buf, firmware);
@@ -205,8 +208,11 @@ int as102_fw_upload(struct as10x_bus_adapter_t *bus_adap)
 
 	/* request kernel to locate firmware file: part2 */
 	errno = request_firmware(&firmware, fw2, &dev->dev);
-	if (errno)
+	if (errno < 0) {
+		pr_err("%s: unable to locate firmware file: %s\n",
+		       DRIVER_NAME, fw2);
 		goto error;
+	}
 
 	/* initiate firmware upload */
 	errno = as102_firmware_upload(bus_adap, cmd_buf, firmware);
