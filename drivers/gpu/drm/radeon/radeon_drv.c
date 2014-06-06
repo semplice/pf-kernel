@@ -413,9 +413,6 @@ static int radeon_pmops_runtime_suspend(struct device *dev)
 		return -EBUSY;
 	}
 
-	if (radeon_runtime_pm == -1 && !radeon_is_px())
-		return -EINVAL;
-
 	drm_dev->switch_power_state = DRM_SWITCH_POWER_CHANGING;
 	drm_kms_helper_poll_disable(drm_dev);
 	vga_switcheroo_set_dynamic_switch(pdev, VGA_SWITCHEROO_OFF);

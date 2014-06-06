@@ -156,12 +156,7 @@ struct iscsi_cmd *iscsit_allocate_cmd(struct iscsi_conn *conn, int state)
 {
 	struct iscsi_cmd *cmd;
 	struct se_session *se_sess = conn->sess->se_sess;
-	int size, tag, state = (gfp_mask & __GFP_WAIT) ? TASK_INTERRUPTIBLE :
-				TASK_RUNNING;
-
-	tag = percpu_ida_alloc(&se_sess->sess_tag_pool, state);
-	if (tag < 0)
-		return NULL;
+	int size, tag;
 
 	tag = percpu_ida_alloc(&se_sess->sess_tag_pool, state);
 	if (tag < 0)

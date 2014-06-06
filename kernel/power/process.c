@@ -196,6 +196,7 @@ void thaw_processes(void)
 	} while_each_thread(g, p);
 	read_unlock(&tasklist_lock);
 
+	WARN_ON(!(curr->flags & PF_SUSPEND_TASK));
 	curr->flags &= ~PF_SUSPEND_TASK;
 
 	usermodehelper_enable();

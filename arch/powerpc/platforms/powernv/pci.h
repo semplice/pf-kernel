@@ -182,7 +182,6 @@ struct pnv_phb {
 		struct OpalIoP7IOCPhbErrorData	p7ioc;
 		struct OpalIoPhb3ErrorData	phb3;
 		struct OpalIoP7IOCErrorData 	hub_diag;
-		struct OpalIoPhb3ErrorData	phb3;
 	} diag;
 
 };

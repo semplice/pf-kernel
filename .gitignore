@@ -31,10 +31,8 @@ modules.builtin
 *.xz
 *.lz4
 *.lzo
+*.patch
 *.gcno
-
-config32
-config64
 
 #
 # Top-level generic files
@@ -47,6 +45,11 @@ config64
 /System.map
 /Module.markers
 /Module.symvers
+
+#
+# Debian directory (make deb-pkg)
+#
+/debian/
 
 #
 # git files that we don't want to ignore even it they are dot-files
@@ -63,6 +66,10 @@ arch/*/include/generated
 
 # stgit generated dirs
 patches-*
+
+# quilt's files
+patches
+series
 
 # cscope files
 cscope.*
