@@ -183,12 +183,6 @@ debian/cgroups-Document-the-Debian-memory-resource-controll.patch
 debian/yama-disable-by-default.patch
 debian/add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by-default.patch
 
-# Support for microcode updates under Xen
-features/all/xen/microcode.patch
-features/all/xen/microcode-amd-fam15plus.patch
-features/all/xen/microcode-typo.patch
-features/all/xen/microcode-api-update.patch
-
 # Miscellaneous bug fixes
 bugfix/all/misc-bmp085-Enable-building-as-a-module.patch
 bugfix/all/kbuild-use-nostdinc-in-compile-tests.patch
@@ -203,7 +197,5 @@ features/all/efi-autoload-efivars.patch
 features/all/mvsas-Recognise-device-subsystem-9485-9485-as-88SE94.patch
 features/all/support-Thinkpad-X1-Carbon-2nd-generation-s-adaptive.patch
 features/all/save-and-restore-adaptive-keyboard-mode-for-suspend-.patch
-bugfix/all/net-ipv4-current-group_info-should-be-put-after-usin.patch
-bugfix/all/filter-prevent-nla-extensions-to-peek-beyond-the-end.patch
 debian/libata-avoid-abi-change-in-3.14.4.patch
 debian/dm-avoid-abi-change-in-3.14.4.patch
