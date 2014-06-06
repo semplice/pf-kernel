@@ -1,7 +1,6 @@
 # Changes to support package build system
 debian/version.patch
 debian/kernelvariables.patch
-debian/gitignore.patch
 features/all/Kbuild-kconfig-Verbose-version-of-listnewconfig.patch
 
 # Fixes/improvements to firmware loading
