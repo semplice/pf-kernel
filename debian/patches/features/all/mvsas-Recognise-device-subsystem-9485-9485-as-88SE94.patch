@@ -21,11 +21,11 @@ Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
  drivers/scsi/mvsas/mv_init.c | 9 +++++++++
  1 file changed, 9 insertions(+)
 
-diff --git a/drivers/scsi/mvsas/mv_init.c b/drivers/scsi/mvsas/mv_init.c
-index 7b7381d..83fa5f8 100644
---- a/drivers/scsi/mvsas/mv_init.c
-+++ b/drivers/scsi/mvsas/mv_init.c
-@@ -729,6 +729,15 @@ static struct pci_device_id mvs_pci_table[] = {
+Index: pf-kernel/drivers/scsi/mvsas/mv_init.c
+===================================================================
+--- pf-kernel.orig/drivers/scsi/mvsas/mv_init.c
++++ pf-kernel/drivers/scsi/mvsas/mv_init.c
+@@ -728,6 +728,15 @@ static struct pci_device_id mvs_pci_tabl
  		.class_mask	= 0,
  		.driver_data	= chip_9485,
  	},

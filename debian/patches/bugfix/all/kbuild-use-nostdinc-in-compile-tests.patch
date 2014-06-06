@@ -13,8 +13,10 @@ The -nostdinc option disables this, though it isn't explicitly
 documented.  This option is already used when actually building
 the kernel.
 
---- a/scripts/Kbuild.include
-+++ b/scripts/Kbuild.include
+Index: pf-kernel/scripts/Kbuild.include
+===================================================================
+--- pf-kernel.orig/scripts/Kbuild.include
++++ pf-kernel/scripts/Kbuild.include
 @@ -110,12 +110,12 @@ as-instr = $(call try-run,\
  # Usage: cflags-y += $(call cc-option,-march=winchip-c6,-march=i586)
  
@@ -60,9 +62,11 @@ the kernel.
  
  # ar-option
  # Usage: KBUILD_ARFLAGS := $(call ar-option,D)
---- a/Makefile
-+++ b/Makefile
-@@ -578,6 +578,8 @@ else
+Index: pf-kernel/Makefile
+===================================================================
+--- pf-kernel.orig/Makefile
++++ pf-kernel/Makefile
+@@ -587,6 +587,8 @@ else
  KBUILD_CFLAGS	+= -O2
  endif
  
@@ -71,7 +75,7 @@ the kernel.
  include $(srctree)/arch/$(SRCARCH)/Makefile
  
  ifdef CONFIG_READABLE_ASM
-@@ -646,7 +648,7 @@ KBUILD_CFLAGS += $(call cc-option, -fno-
+@@ -671,7 +673,7 @@ KBUILD_CFLAGS += $(call cc-option, -fno-
  endif
  
  # arch Makefile may override CC so keep this after arch Makefile is included

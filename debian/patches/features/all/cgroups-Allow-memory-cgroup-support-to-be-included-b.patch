@@ -17,8 +17,10 @@ Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
  mm/memcontrol.c                     |    3 +++
  4 files changed, 29 insertions(+), 6 deletions(-)
 
---- a/Documentation/kernel-parameters.txt
-+++ b/Documentation/kernel-parameters.txt
+Index: pf-kernel/Documentation/kernel-parameters.txt
+===================================================================
+--- pf-kernel.orig/Documentation/kernel-parameters.txt
++++ pf-kernel/Documentation/kernel-parameters.txt
 @@ -532,8 +532,8 @@ bytes respectively. Such letter suffixes
  	ccw_timeout_log [S390]
  			See Documentation/s390/CommonIO for details.
@@ -30,9 +32,11 @@ Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
  			The effects of cgroup_disable=foo are:
  			- foo isn't auto-mounted if you mount all cgroups in
  			  a single hierarchy
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -940,6 +940,14 @@ config MEMCG
+Index: pf-kernel/init/Kconfig
+===================================================================
+--- pf-kernel.orig/init/Kconfig
++++ pf-kernel/init/Kconfig
+@@ -957,6 +957,14 @@ config MEMCG
  	  This config option also selects MM_OWNER config option, which
  	  could in turn add some fork/exit overhead.
  
@@ -47,9 +51,11 @@ Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
  config MEMCG_SWAP
  	bool "Memory Resource Controller Swap Extension"
  	depends on MEMCG && SWAP
---- a/kernel/cgroup.c
-+++ b/kernel/cgroup.c
-@@ -5222,7 +5222,7 @@ static void cgroup_release_agent(struct
+Index: pf-kernel/kernel/cgroup.c
+===================================================================
+--- pf-kernel.orig/kernel/cgroup.c
++++ pf-kernel/kernel/cgroup.c
+@@ -5225,7 +5225,7 @@ static void cgroup_release_agent(struct
  	mutex_unlock(&cgroup_mutex);
  }
  
@@ -58,7 +64,7 @@ Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
  {
  	struct cgroup_subsys *ss;
  	char *token;
-@@ -5238,17 +5238,29 @@ static int __init cgroup_disable(char *s
+@@ -5241,17 +5241,29 @@ static int __init cgroup_disable(char *s
  		 */
  		for_each_builtin_subsys(ss, i) {
  			if (!strcmp(token, ss->name)) {
@@ -91,9 +97,11 @@ Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
  /**
   * css_from_dir - get corresponding css from the dentry of a cgroup dir
   * @dentry: directory dentry of interest
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -7266,6 +7266,9 @@ static void mem_cgroup_bind(struct cgrou
+Index: pf-kernel/mm/memcontrol.c
+===================================================================
+--- pf-kernel.orig/mm/memcontrol.c
++++ pf-kernel/mm/memcontrol.c
+@@ -7274,6 +7274,9 @@ static void mem_cgroup_bind(struct cgrou
  
  struct cgroup_subsys mem_cgroup_subsys = {
  	.name = "memory",
