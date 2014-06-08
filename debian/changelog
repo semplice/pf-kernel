@@ -1,9 +1,8 @@
-linux-semplice (3.14.5-2) devel; urgency=medium
+linux-semplice (3.14.6-1) devel; urgency=high
 
-  * Configuration update.
-  * Security (CVE-2014-3153) bugfix.
+  * Updated to 3.14.6.
 
- -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Sat, 07 Jun 2014 22:30:57 +0200
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Sun, 08 Jun 2014 23:17:24 +0200
 
 linux-semplice (3.14.5-1) devel; urgency=high
 
