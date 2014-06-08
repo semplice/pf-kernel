@@ -1,6 +1,6 @@
 pkgname=('linux-pf' 'linux-pf-headers')
 pkgver=3.14.0
-pkgrel=3
+pkgrel=4
 _pkgsuffix="-pf$pkgrel"
 pkgdesc="pf-kernel with modules"
 arch=('i686' 'x86_64')
